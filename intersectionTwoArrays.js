@@ -1,11 +1,22 @@
 var intersect = function (num1, num2) {
-    let sol = [];
-    for (let i = 0; i < num2.length; i++) {
-        let index = num1.indexOf(num2[i]);
-        if (index >= 0) {
-            sol.push(num2[i]);
-            num1.splice(index, 1);
+    const map = new Map();
+    const result = [];
+
+    for (let num of num1) {
+        if (!map.has(num)) {
+            map.set(num, 1);
+        } else {
+            map.set(num, map.get(num) + 1)
         }
     }
-    return sol.sort();
+
+
+    for (let num of num2) {
+        if (map.get(num) > 0) {
+            result.push(num);
+            map.set(num, map.get(num) - 1);
+        }
+    }
+
+    return result;
 }
